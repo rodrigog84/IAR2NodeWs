@@ -22,6 +22,7 @@ const flowPrincipal  = addKeyword(EVENTS.WELCOME)
                     "message": ctx.body,
                     "typemessage": "Whatsapp",
                     "valuetype": ctx.from,
+                    "solution" : "Reclamos",
                     "enterprise": process.env.ENTERPRISE
                 });
                 
@@ -33,7 +34,7 @@ const flowPrincipal  = addKeyword(EVENTS.WELCOME)
                   };
                   
                 //console.log('http://' + process.env.IP_APIREST + '/enviareclamo/')
-                let response = await fetch('http://' + process.env.IP_APIREST + '/enviareclamolangchain/', requestOptions);
+                let response = await fetch('http://' + process.env.IP_APIREST + '/send_message/', requestOptions);
             result = await response.json();
             resultado = await result.respuesta;
 
