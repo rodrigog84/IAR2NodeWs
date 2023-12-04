@@ -11,7 +11,7 @@ const MySQLAdapter = require('@bot-whatsapp/database/mysql')
 const ServerAPI = require("./http");
 
 
-const flowPrincipal  = addKeyword(EVENTS.WELCOME)
+const flowReclamos  = addKeyword(EVENTS.WELCOME)
     .addAction(
     async(ctx,{flowDynamic, fallBack, provider}) => {
        // console.log(ctx)
@@ -49,44 +49,6 @@ const flowPrincipal  = addKeyword(EVENTS.WELCOME)
     }
 )
 
-/*
-const flowPrincipal  = addKeyword(EVENTS.WELCOME)
-    .addAnswer('s',
-    {capture : true},
-    async(ctx,{flowDynamic, fallBack, provider}) => {
-        console.log(ctx)
-
-                var myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/json");
-                var raw = JSON.stringify({
-                    "message": ctx.body,
-                    "typemessage": "Whatsapp",
-                    "valuetype": ctx.from,
-                    "enterprise": process.env.ENTERPRISE
-                });
-                
-                var requestOptions = {
-                    method: 'POST',
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: 'follow'
-                  };
-                  
-                let response = await fetch('http://' + process.env.IP_APIREST + '/enviareclamo/', requestOptions);
-            result = await response.json();
-            resultado = await result.respuesta;
-
-            flowDynamic([
-                {
-                    body: resultado
-                }
-            ])
-    }
-)*/
-
-
-
-
 const main = async () => {
     const adapterDB = new MySQLAdapter({
         host: process.env.MYSQL_DB_HOST,
@@ -95,7 +57,7 @@ const main = async () => {
         password: process.env.MYSQL_DB_PASSWORD,
         port: process.env.MYSQL_DB_PORT,
     })
-    const adapterFlow = createFlow([flowPrincipal])
+    const adapterFlow = createFlow([flowReclamos])
     const adapterProvider = createProvider(BaileysProvider)
     const httpServer = new ServerAPI(adapterProvider, adapterDB)
 
