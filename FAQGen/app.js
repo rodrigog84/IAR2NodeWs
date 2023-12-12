@@ -13,16 +13,40 @@ const ServerAPI = require("./http");
 
 const flowFAQ  = addKeyword(EVENTS.WELCOME)
     .addAction(
-    async(ctx,{flowDynamic, fallBack, provider}) => {
-       // console.log(ctx)
-
-                flowDynamic([
-                    {
-                        body: 'FAQ'
-                    }
-                ])
-
-    }
+        async(ctx,{flowDynamic, fallBack, provider}) => {
+            // console.log(ctx)
+     
+                     var myHeaders = new Headers();
+                     myHeaders.append("Content-Type", "application/json");
+                     var raw = JSON.stringify({
+                         "message": ctx.body,
+                         "typemessage": "Whatsapp",
+                         "valuetype": ctx.from,
+                         "solution" : "FAQ",
+                         "enterprise": process.env.ENTERPRISE
+                     });
+                     
+                     var requestOptions = {
+                         method: 'POST',
+                         headers: myHeaders,
+                         body: raw,
+                         redirect: 'follow'
+                       };
+                       
+                     //console.log('http://' + process.env.IP_APIREST + '/enviareclamo/')
+                     let response = await fetch('http://' + process.env.IP_APIREST + '/send_message/', requestOptions);
+                 result = await response.json();
+                 resultado = await result.respuesta;
+     
+                 if(resultado != ''){
+                     flowDynamic([
+                         {
+                             body: resultado
+                         }
+                     ])
+                 }
+     
+         }
 )
 
 
