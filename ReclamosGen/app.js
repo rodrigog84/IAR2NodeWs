@@ -34,7 +34,7 @@ const flowReclamos  = addKeyword(EVENTS.WELCOME)
                   };
                   
                 //console.log('http://' + process.env.IP_APIREST + '/enviareclamo/')
-                let response = await fetch('http://' + process.env.IP_APIREST + '/send_message/', requestOptions);
+                let response = await fetch('https://' + process.env.IP_APIREST + '/send_message/', requestOptions);
             result = await response.json();
             resultado = await result.respuesta;
 
